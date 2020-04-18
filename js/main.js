@@ -72,7 +72,11 @@ function onKeyPressed(e) {
 		        navigationState = BODY;
 		        break;
 		    case 40: //down
-		        newBodyPos++;
+		        if (navigationState == HEADER) {
+		            newBodyPos = 0;
+		        } else {
+		            newBodyPos++;
+		        }
 		        navigationState = BODY;
 		        break;
 	        case 13: //enter
@@ -96,8 +100,13 @@ function onKeyPressed(e) {
 	        newHeaderPos = 0;
 
         if (newBodyPos < 0) {
-            navigationState = HEADER;
-	        newBodyPos = 0;
+            if (headerLinks.length !== 0) {
+                navigationState = HEADER;
+	            newBodyPos = 0;
+	        } else {
+	            newBodyPos = bodyLinks.length - 1;
+	            navigationState = BODY;
+	        }
 	    }
 
         if (newBodyPos === bodyLinks.length)
