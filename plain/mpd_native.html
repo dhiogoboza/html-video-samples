@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<!--
+Copyright 2017 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="description" content="HTML Video Samples">
+<meta id="theme-color" name="theme-color" content="#fff">
+<script src="../js/main.js"></script>
+
+<title>Non encrypted video</title>
+
+<link rel="stylesheet" href="../css/main.css">
+
+</head>
+
+<body>
+
+<div id="container">
+
+  <h1>
+    <span class="nav">
+      <a href="../index.html">HOME</a> >
+      <a href="index.html">Non encrypted</a> >
+    </span>
+    MPD in video src
+  </h1>
+
+  <video autoplay controls>
+    <source src="https://dash.akamaized.net/dash264/TestCases/1a/sony/SNE_DASH_SD_CASE1A_REVISED.mpd"  type="video/mp4" />
+    <p>This browser does not support the video element.</p>
+  </video>
+
+  <p id="videoSrc"></p>
+
+  <p>View console to see event logging.</p>
+</div>
+</body>
+</html>
+

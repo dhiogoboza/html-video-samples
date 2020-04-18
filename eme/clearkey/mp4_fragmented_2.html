@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>EME: Clear Key Encryption</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <script src="../../js/main.js"></script>
+</head>
+<body>
+  <div id="container">
+    <h1>
+        <span class="nav">
+          <a href="../../index.html">HOME</a> >
+          <a href="index.html">EME - ClearKey</a> >
+        </span>
+        MP4 Fragmented 2
+    </h1>
+  
+    <video id="video" controls autoplay></video>
+    <div id="log"></div>
+    <script type="text/javascript">
+
+      function e(id) {
+        return document.getElementById(id);
+      }
+
+      function log(msg) {
+        var log_pane = e('log');
+        log_pane.appendChild(document.createTextNode(msg));
+        log_pane.appendChild(document.createElement("br"));
+      }
+
+      function bail(message)
+      {
+        return function(err) {
+          if (err) {
+            message +=  "; " + String(err)
+          }
+          ok(false, message);
+          if (err) {
+            info(String(err));
+          }
+        }
+      }
+
+      function ArrayBufferToString(arr)
+      {
+        var str = '';
+        var view = new Uint8Array(arr);
+        for (var i = 0; i < view.length; i++) {
+          str += String.fromCharCode(view[i]);
+        }
+        return str;
+      }
+
+      function StringToArrayBuffer(str)
+      {
+        var arr = new ArrayBuffer(str.length);
+        var view = new Uint8Array(arr);
+        for (var i = 0; i < str.length; i++) {
+          view[i] = str.charCodeAt(i);
+        }
+        return arr;
+      }
+
+      function StringToHex(str){
+        var res = "";
+        for (var i = 0; i < str.length; ++i) {
+            res += ("0" + str.charCodeAt(i).toString(16)).slice(-2);
+        }
+        return res;
+      }
+
+      function Base64ToHex(str)
+      {
+        var bin = window.atob(str.replace(/-/g, "+").replace(/_/g, "/"));
+        var res = "";
+        for (var i = 0; i < bin.length; i++) {
+          res += ("0" + bin.charCodeAt(i).toString(16)).substr(-2);
+        }
+        return res;
+      }
+
+      function HexToBase64(hex)
+      {
+        var bin = "";
+        for (var i = 0; i < hex.length; i += 2) {
+          bin += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+        }
+        return window.btoa(bin).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+      }
+
+      function CreateMediaKeys(video, configurations) {
+        return navigator.requestMediaKeySystemAccess("org.w3.clearkey", configurations)
+          .then((keySystemAccess) => {
+            return keySystemAccess.createMediaKeys();
+          }, bail("Failed to request key system access."))
+
+          .then((mediaKeys) => {
+            video.mediaKeys = mediaKeys;
+            return video.setMediaKeys(mediaKeys);
+          }, bail("Failed to set media keys."));
+      }
+
+      // Filters out all PSSH boxes except those adhering to the common open
+      // SystemID PSSH box format, which are returned. This is so that proprietary
+      // PSSH boxes in the test data are ignored. 
+      function extractCommonPsshBoxes(arrayBuffer) {
+        var psshes = [];
+        // PSSH box layout for ClearKey:
+        // Offset             | Description
+        // -------------------+----------------------------------------------------
+        //   0                |  4 byte size
+        //   4                |  4 byte FOURCC code "pssh"
+        //   8                |  1 byte version, must be 1.
+        //   9                |  3 byte flags, ignored.
+        //  12                | 16 byte SystemID id. Should be the Common SystemId.
+        //  28                |  4 byte KidCount.
+        //  32                | KidCount * 16 bytes.
+        //  32 + 16*KidCount  | 4 byte DataSize field. Should be 0.
+        var initData = new Uint8Array(arrayBuffer);
+        var view = new DataView(arrayBuffer);
+        var offset = 0;
+        const pssh = (0x70 << 24) + (0x73 << 16) + (0x73 << 8) + 0x68;
+        const commonSystemId = "1077efecc0b24d02ace33c1e52e2fb4b";
+        const minBoxSize = 36;
+        while (offset + minBoxSize < view.byteLength) {
+          var size = view.getUint32(offset);
+          if (offset + size > view.byteLength) {
+            return;
+          }
+          if (size == 0) {
+            size = view.byteLength - offset;
+          }
+          var type = view.getUint32(offset + 4);
+          if (type != pssh) {
+            offset += size;
+            continue;
+          }
+          var version = view.getUint8(offset + 8);
+          if (version != 1) {
+            offset += size;
+            continue;
+          }
+          var systemId = StringToHex(ArrayBufferToString(initData.slice(offset + 12, offset + 28)));
+          if (systemId != commonSystemId) {
+            offset += size;
+            continue;
+          }
+          var kidCount = view.getUint32(offset + 28);
+          if (32 + kidCount * 16 + 4 > size) {
+            offset += size;
+            continue;
+          }
+
+          // Valid CENC PSSH.
+          psshes.push(initData.slice(offset, offset + size));
+          offset += size;
+        }
+        var len = 0;
+        for (box of psshes) {
+          len += box.length;
+        }
+        var rv = new Uint8Array(len);
+        var i = 0;
+        for (box of psshes) {
+          rv.set(box, i);
+          i += box.length;
+        }
+        return rv;
+      }
+
+      var encryptedEventCount = 0;
+
+      var initDatas = new Map();
+
+      var keys = {
+        "b326f895b6a24cc5a4dc70995728059c" : "617d8a125a284df48e3c6b1866348a3f"
+      };
+
+      function handleEncrypted(event) {
+        encryptedEventCount++;
+
+        var initData = extractCommonPsshBoxes(event.initData)
+        var video = event.target;
+ 
+        var hexStr = StringToHex(ArrayBufferToString(initData));
+        if (initData.length == 0 || initDatas.has(hexStr)) {
+          // Already have a session for this.
+          return;
+        }
+
+        log("encrypted event => len=" + initData.length + " " + hexStr);
+
+        var session = video.mediaKeys.createSession();
+        initDatas.set(hexStr, session);
+
+        session.addEventListener("message", function(event) {
+          var msgStr = ArrayBufferToString(event.message);
+          var msg = JSON.parse(msgStr);
+          log("Received message from CDM: " + msgStr);
+
+          var outKeys = [];
+          for (var i = 0; i < msg.kids.length; i++) {
+            var id64 = msg.kids[i];
+            var idHex = Base64ToHex(msg.kids[i]).toLowerCase();
+            var key = keys[idHex];
+
+            log("Need key " + idHex);
+
+            if (key) {
+              log("found key " + key + " for key id " + idHex);
+              outKeys.push({
+                "kty":"oct",
+                "kid":id64,
+                "k":HexToBase64(key)
+              });
+            } else {
+              reject(`couldn't find key for key id ${idHex}`);
+            }
+          }
+          var update = JSON.stringify({
+            "keys" : outKeys,
+            "type" : msg.type
+          });
+          log("sending update message to CDM: " + update);
+
+          event.target.update(StringToArrayBuffer(update)).then(function() {
+            log("MediaKeySession update ok!");
+          }).catch(function(reason) {
+            log(`MediaKeySession update failed: ${reason}`);
+          });          
+        });
+
+        session.generateRequest(event.initDataType, initData)
+        .catch(reason => {
+          log(`generate request failed. ${reason}`);
+        });
+      }
+
+      const videoContentType = "video/mp4; codecs=\"avc1.64000d\"";
+      const audioContentType = "audio/mp4; codecs=\"mp4a.40.2\"";
+
+      var configurations = [{
+        initDataTypes: ["cenc"],
+        audioCapabilities: [{
+          contentType: audioContentType
+        }],
+        videoCapabilities: [{
+          contentType: videoContentType
+        }]
+      }];
+
+      var video = document.getElementById("video");
+
+      video.addEventListener("encrypted", handleEncrypted, false);
+
+      video.addEventListener("ended", ()=>{
+        log("Got " + encryptedEventCount + " encrypted events");
+      });
+
+      CreateMediaKeys(video, configurations).then(()=>{ video.src="/video/bbb-480p-fragmented-encrypted.mp4"; });
+
+    </script>
+  </div>
+</body>
+</html>
