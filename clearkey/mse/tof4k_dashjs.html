@@ -17,7 +17,7 @@ limitations under the License.
 -->
 
 <!--
-Sample extracted from: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.html
+Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.html
 -->
 
 
@@ -45,7 +45,7 @@ Sample extracted from: https://reference.dashif.org/dash.js/latest/samples/drm/c
       <a href="../index.html">ClearKey</a> >
       <a href="index.html">MSE</a> >
     </span>
-    BBB4K (dash.js)
+    TOF4K (dash.js)
   </h1>
 
   <video autoplay controls id="video">
@@ -73,12 +73,12 @@ Sample extracted from: https://reference.dashif.org/dash.js/latest/samples/drm/c
       const protData = {
         "org.w3.clearkey": {
           "clearkeys": {
-            "syb4lbaiTMWk3HCZVygFnA": "YX2KElooTfSOPGsYZjSKPw"
+            "nrQFDeRLSAKTLifXUIPiZg": "FmY0xnWCPCNaSpRG-tUuTQ"
           }
         }
       };
       let video, player;
-      let url = "../../video/bbb-4k/stream.mpd";
+      let url = "https://media.axprod.net/TestVectors/v7-MultiDRM-SingleKey/Manifest_ClearKey.mpd";
 
       video = document.querySelector("video");
       player = dashjs.MediaPlayer().create();
