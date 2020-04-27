@@ -1,3 +1,13 @@
+<!--
+eme-in-non-fragmented-mp4
+Demonstrates EME in non-fragmented MP4 in src=url <video>.
+
+In Firefox requires pref media.eme.mse-only=false.
+
+Note: This demo fails to play in Firefox and Chrome, it serves to determine whether these browsers support EME in src=url MP4 video. They don't!
+
+https://github.com/cpearce/eme-in-non-fragmented-mp4
+-->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -8,13 +18,14 @@
 <body>
   <div id="container">
     <h1>
-        <span class="nav">
-          <a href="../../index.html">HOME</a> >
-          <a href="index.html">EME - ClearKey</a> >
-        </span>
-        MP4 Fragmented 2
+      <span class="nav">
+        <a href="../../index.html">HOME</a> >
+        <a href="../index.html">ClearKey</a> >
+        <a href="index.html">EME</a> >
+      </span>
+      MP4 non Fragmented
     </h1>
-  
+
     <video id="video" controls autoplay></video>
     <div id="log"></div>
     <script type="text/javascript">
@@ -27,6 +38,7 @@
         var log_pane = e('log');
         log_pane.appendChild(document.createTextNode(msg));
         log_pane.appendChild(document.createElement("br"));
+        console.log(msg);
       }
 
       function bail(message)
@@ -174,7 +186,8 @@
       var initDatas = new Map();
 
       var keys = {
-        "b326f895b6a24cc5a4dc70995728059c" : "617d8a125a284df48e3c6b1866348a3f"
+        "7e571d017e571d017e571d017e571d01" : "7e5711117e5711117e5711117e571111",
+        "7e571d027e571d027e571d027e571d02" : "7e5722227e5722227e5722227e572222",
       };
 
       function handleEncrypted(event) {
@@ -258,7 +271,7 @@
         log("Got " + encryptedEventCount + " encrypted events");
       });
 
-      CreateMediaKeys(video, configurations).then(()=>{ video.src="../../video/bbb-480p-fragmented-encrypted.mp4"; });
+      CreateMediaKeys(video, configurations).then(()=>{ video.src="../../video/short-cenc.mp4"; });
 
     </script>
   </div>
