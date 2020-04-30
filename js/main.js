@@ -12,6 +12,8 @@ let bodyPos = -1;
 let headerLinksContainter;
 let bodyLinksContainter;
 
+let logPane;
+
 function selectPositions(newHeaderPos, newBodyPos) {
     if (newHeaderPos != headerPos) {
         if (headerPos >= 0) {
@@ -116,6 +118,18 @@ function onKeyPressed(e) {
     } catch(Exception) {}
 }
 
+function logMessage(msg, error) {
+    let textNode = document.createElement("span");
+    textNode.innerHTML = msg;
+
+    logPane.appendChild(textNode);
+    logPane.appendChild(document.createElement("br"));
+
+    if (error) {
+        textNode.style.color = "red";
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
     headerLinks = document.querySelectorAll("h1 > .nav > a");
@@ -125,6 +139,22 @@ document.addEventListener("DOMContentLoaded", function() {
     bodyLinksContainter = document.querySelector("#links");
 
     selectPositions(0, 0);
+
+    logPane = document.getElementById('log');
+
+    if (logPane != undefined) {
+        let normalLog = console.log;
+        console.log = function (message) {
+            logMessage(message, false);
+            normalLog.apply(console, arguments);
+        };
+
+        let errorLog = console.error;
+        console.error = function (message) {
+            logMessage(message, true);
+            errorLog.apply(console, arguments);
+        };
+    }
 });
 
 

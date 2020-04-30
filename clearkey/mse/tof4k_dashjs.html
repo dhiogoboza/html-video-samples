@@ -55,20 +55,6 @@ Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.ht
   </div>
 
   <script>
-    let logPane;
-
-    function log(msg, error) {
-      let textNode = document.createElement("span");
-      textNode.innerHTML = msg;
-
-      logPane.appendChild(textNode);
-      logPane.appendChild(document.createElement("br"));
-
-      if (error) {
-        textNode.style.color = "red";
-      }
-    }
-
     function init() {
       const protData = {
         "org.w3.clearkey": {
@@ -87,20 +73,6 @@ Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.ht
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      logPane = document.getElementById('log');
-
-      let normalLog = console.log;
-      console.log = function (message) {
-          log(message, false);
-          normalLog.apply(console, arguments);
-      };
-
-      let errorLog = console.error;
-      console.error = function (message) {
-          log(message, true);
-          errorLog.apply(console, arguments);
-      };
-
       init();
     });
     </script>
