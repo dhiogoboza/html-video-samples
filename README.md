@@ -22,6 +22,9 @@ https://dhiogoboza.github.io/html-video-samples/
 - [Big Buck Bunny Clearkey CENC](video/big-buck-bunny-clearkey-cenc/README.md)
 - [Big Buck Bunny Clearkey CBCS](video/big-buck-bunny-clearkey-cbcs/README.md)
 
+## Bugs found in browsers with this tests
+- https://bugzilla.mozilla.org/show_bug.cgi?id=1644879
+
 ## References sources
 - https://github.com/samdutton/simpl
 - https://github.com/cpearce/eme-in-non-fragmented-mp4
