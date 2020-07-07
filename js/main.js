@@ -130,7 +130,6 @@ function logMessage(msg, error) {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
     headerLinks = document.querySelectorAll("h1 > .nav > a");
     bodyLinks = document.querySelectorAll("#links > a");
@@ -156,6 +155,5 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 });
-
 
 document.onkeydown = onKeyPressed;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.html
+-->
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="description" content="HTML Video Samples">
+<meta id="theme-color" name="theme-color" content="#fff">
+<script src="../../js/main.js"></script>
+<script src="https://cdn.dashjs.org/latest/dash.all.debug.js"></script>
+<title>MSE: Clear Key Encryption</title>
+
+<link rel="stylesheet" href="../../css/main.css">
+
+</head>
+
+<body>
+
+<div id="container">
+
+  <h1>
+    <span class="nav">
+      <a href="../../index.html">HOME</a> >
+      <a href="../index.html">ClearKey</a> >
+      <a href="index.html">MSE</a> >
+    </span>
+    BBB CENC (mpd, dash.js)
+  </h1>
+
+  <video autoplay controls id="video">
+  </video>
+
+  <div id="log">
+  </div>
+
+  <script>
+    function init() {
+      const protData = {
+        "org.w3.clearkey": {
+          "clearkeys": {
+            "syb4lbaiTMWk3HCZVygFnA": "YX2KElooTfSOPGsYZjSKPw"
+          }
+        }
+      };
+      let video, player;
+      let url = "../../video/big-buck-bunny-clearkey-cenc/content/stream.mpd";
+
+      video = document.querySelector("video");
+      player = dashjs.MediaPlayer().create();
+      player.initialize(video, url, true);
+      player.setProtectionData(protData);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      init();
+    });
+    </script>
+
+</div>
+</body>
+</html>

@@ -69,7 +69,7 @@ AAAANHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAGzJviVtqJMxaTccJlXKAWcAAAAAA==
 
 Now get the generated psshbox and insert in a content protection node in the `stream.mpd` generated file:
 ```xml
-<ContentProtection schemeIdUri="urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b" value="cbcs">
+<ContentProtection schemeIdUri="urn:uuid:e2719d58-a985-b3c9-781a-b030af78d30e" value="cbcs">
     <cenc:pssh>AAAANHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAGzJviVtqJMxaTccJlXKAWcAAAAAA==</cenc:pssh>
 </ContentProtection>
 ```

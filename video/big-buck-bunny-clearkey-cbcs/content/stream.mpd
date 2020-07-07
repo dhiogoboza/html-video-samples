@@ -4,7 +4,7 @@
   <Period>
     <!-- Video -->
     <AdaptationSet maxHeight="720" maxWidth="1280" mimeType="video/mp4" segmentAlignment="true" startWithSAP="1">
-      <ContentProtection schemeIdUri="urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b" value="cbcs">
+      <ContentProtection schemeIdUri="urn:uuid:e2719d58-a985-b3c9-781a-b030af78d30e" value="cbcs">
         <cenc:pssh>AAAANHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAGzJviVtqJMxaTccJlXKAWcAAAAAA==</cenc:pssh>
       </ContentProtection>
       <SegmentTemplate duration="3200" initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1" timescale="1000"/>
@@ -15,7 +15,7 @@
     </AdaptationSet>
     <!-- Audio -->
     <AdaptationSet mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1">
-      <ContentProtection schemeIdUri="urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b" value="cbcs">
+      <ContentProtection schemeIdUri="urn:uuid:e2719d58-a985-b3c9-781a-b030af78d30e" value="cbcs">
         <cenc:pssh>AAAANHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAGzJviVtqJMxaTccJlXKAWcAAAAAA==</cenc:pssh>
       </ContentProtection>
       <SegmentTemplate duration="1999" initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1" timescale="1000"/>
