@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+https://www.bok.net/svn/Bento4/trunk/Documents/Websites/www.bok.net/dash/players/html5/shaka-player/index.html
+-->
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="description" content="HTML Video Samples">
+<meta id="theme-color" name="theme-color" content="#fff">
+<script src="../../js/main.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/shaka-player/2.0.5/shaka-player.compiled.debug.js"></script>
+<script src="../../js/shaka.js"></script>
+
+<title>MSE: Big Buck Bunny CBCS Shaka Player No PSSH Box</title>
+
+<link rel="stylesheet" href="../../css/main.css">
+
+</head>
+
+<body>
+
+<div id="container">
+
+  <h1>
+    <span class="nav">
+      <a href="../../index.html">HOME</a> >
+      <a href="../index.html">ClearKey</a> >
+      <a href="index.html">MSE</a> >
+    </span>
+    Big Buck Bunny CENC NPB (mpd, Shaka Player)
+  </h1>
+
+  <video autoplay="true" controls id="video">
+  </video>
+
+  <div id="supportedDrms">
+  </div>
+
+  <div id="log">
+  </div>
+
+  <script>
+      playMedia("../../video/big-buck-bunny-no-psshbox/content/stream.mpd",
+            "b326f895b6a24cc5a4dc70995728059c", "617d8a125a284df48e3c6b1866348a3f");
+  </script>
+
+</div>
+</body>
+</html>

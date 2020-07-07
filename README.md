@@ -14,8 +14,9 @@ https://dhiogoboza.github.io/html-video-samples/
 | [ClearKey > EME > WEBM](https://dhiogoboza.github.io/html-video-samples/clearkey/eme/webm.html) | ✔️ | ❌ |
 | [ClearKey > MSE > TOF4K (mpd, dash.js)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/tof4k_dashjs.html) | ✔️ | ✔️ |
 | [ClearKey > MSE > BBB Dash CENC (mpd, dash.js)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cenc_dashjs.html) | ✔️ | ✔️ |
+| [ClearKey > MSE > BBB Dash CENC No PSSH Box (mpd, dash.js)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cenc_no_psshbox_dashjs.html) | ✔️ | ✔️ |
 | [ClearKey > MSE > BBB Dash CENC (mpd, Shaka Player)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cenc_shaka.html) | ✔️ | ✔️ |
-| [ClearKey > MSE > BBB Dash CENC (mpd, Shaka Player)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cenc_shaka.html) | ✔️ | ✔️ |
+| [ClearKey > MSE > BBB Dash CENC No PSSH Box (mpd, Shaka Player)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cenc_no_psshbox_shaka.html) | ✔️ | ✔️ |
 | [ClearKey > MSE > BBB Dash CBCS (mpd, Shaka Player)](https://dhiogoboza.github.io/html-video-samples/clearkey/mse/bbb_cbcs_shaka.html) | ✔️ | ❌ |
 | [Non encrypted > Dash mpd in video src](https://dhiogoboza.github.io/html-video-samples/plain/mpd_native.html) | ❌ | ❌ |
 | [Non encrypted > HLS m3u8 in video src](https://dhiogoboza.github.io/html-video-samples/plain/m3u8_native.html) | ❌ | ❌ |

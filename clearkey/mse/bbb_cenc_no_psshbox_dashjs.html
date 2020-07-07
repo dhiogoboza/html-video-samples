@@ -9,8 +9,8 @@ Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.ht
 <meta name="description" content="HTML Video Samples">
 <meta id="theme-color" name="theme-color" content="#fff">
 <script src="../../js/main.js"></script>
-<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
-<title>MSE: Tears Of Steel dash.js</title>
+<script src="https://cdn.dashjs.org/latest/dash.all.debug.js"></script>
+<title>MSE: Big Buck Bunny CBCS dash.js No PSSH Box</title>
 
 <link rel="stylesheet" href="../../css/main.css">
 
@@ -26,7 +26,7 @@ Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.ht
       <a href="../index.html">ClearKey</a> >
       <a href="index.html">MSE</a> >
     </span>
-    TOF4K (mpd, dash.js)
+    BBB CENC (mpd, dash.js)
   </h1>
 
   <video autoplay controls id="video">
@@ -40,12 +40,12 @@ Inspired on: https://reference.dashif.org/dash.js/latest/samples/drm/clearkey.ht
       const protData = {
         "org.w3.clearkey": {
           "clearkeys": {
-            "nrQFDeRLSAKTLifXUIPiZg": "FmY0xnWCPCNaSpRG-tUuTQ"
+            "syb4lbaiTMWk3HCZVygFnA": "YX2KElooTfSOPGsYZjSKPw"
           }
         }
       };
       let video, player;
-      let url = "https://media.axprod.net/TestVectors/v7-MultiDRM-SingleKey/Manifest_ClearKey.mpd";
+      let url = "../../video/big-buck-bunny-no-psshbox/content/stream.mpd";
 
       video = document.querySelector("video");
       player = dashjs.MediaPlayer().create();
