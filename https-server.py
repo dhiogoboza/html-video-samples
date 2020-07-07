@@ -7,7 +7,7 @@
 # https://gist.github.com/dergachev/7028596
 # 
 # To generate a certificate use:
-# openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+#    openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
 # run as follows:
 #    python3 https-server.py
 # then in your browser, visit:

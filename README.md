@@ -1,7 +1,20 @@
 # HTML video samples
 Videos samples to test in browsers.
 
-## Available at
+## Serving local
+To run DRM tests it is required serve over https. To do this, follow the next steps:
+
+- Generate a self-signed key:
+```bash
+openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+```
+
+- Enable server with https-server.py script:
+```bash
+python3 https-server.py`
+```
+
+## Online version
 https://dhiogoboza.github.io/html-video-samples/
 
 ## Browsers support
